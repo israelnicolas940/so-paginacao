@@ -1,17 +1,7 @@
 #!/usr/bin/env python3
 import click
-import enum
-
-
-class ReplacementAlgo(enum.Enum):
-    FIFO = enum.auto()
-    LRU = enum.auto()
-    OTIMO = enum.auto()
-    SEGUNDA_CHANCE = enum.auto()
-    CLOCK = enum.auto()
-    NRU = enum.auto()
-    LFU = enum.auto()
-    MFU = enum.auto()
+from pagesim.core.pager_service import PagerService
+from pagesim.core.models import ReplacementAlgo
 
 
 @click.command(
@@ -47,13 +37,12 @@ class ReplacementAlgo(enum.Enum):
     help="Habilita modo verboso",
 )
 @click.help_option("-h", "--help")
-def cli(algo: str, frames: int, trace: str, verbose: bool) -> None:
+def cli(algo: ReplacementAlgo, frames: int, trace: str, verbose: bool) -> None:
     """Pager simulator."""
+    service = PagerService(algo, frames, trace)
+    report = service.run_pager()
+    click.echo(report)
 
-    click.echo(f"Algorithm: {algo}")
-    click.echo(f"Frames: {frames}")
-    click.echo(f"Trace file: {trace}")
 
-
-# if __name__ == "__main__":
-#     cli()
+if __name__ == "__main__":
+    cli()
