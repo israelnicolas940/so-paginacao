@@ -29,7 +29,7 @@ class Report:
                 f"Frames: {self.frames}",
                 f"Referências: {self.trace_size}",
                 f"Faltas de página: {self.algo_res.page_faults}",
-                f"Taxa de faltas: {self.algo_res.page_faults / self.trace_size:.4f}",
+                f"Taxa de faltas: {(self.algo_res.page_faults / self.trace_size)*100:.2f}%",
                 f"Evicções: {self.algo_res.disk_writes}",
                 "Conjunto residente final:",
                 f"frame_ids: {[i for i, _ in enumerate(self.algo_res.ram_last_state)]}",
